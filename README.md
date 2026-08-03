@@ -1,4 +1,4 @@
-# MonthWise
+# MonthlyWise
 Managing personal finances can be frustrating when you don't have a clear overview of your income and expenses.
 
 I built a Budget Tracker that makes it easy to organize spending and monitor your budget through a simple and intuitive interface.
