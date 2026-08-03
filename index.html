@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget Tracker</title>
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Personal Budget Tracker</h1>
+    <form class="submit">
+        <input type="number" name="budgetSubmit" class="budgetSubmit" placeholder="Napis svuj budget">
+        <button class="buttonBudgetSubmit" type="submit">Enter</button>
+    </form>
+
+    <form class="submit1">
+        <br>
+        <input inputmode="text" name="needSubmit" pattern="[a-zA-Z ]+"  required="required" class="needSubmit" placeholder="Napis potrebu">
+        <input type="number" name="needNumSubmit" required="required" class="needNumSubmit" placeholder="Napis castku">
+        <button class="buttonNeedSubmit" type="submit" disabled>Enter</button>
+    </form>
+
+    <div class="card">
+    <div class="remaining"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
