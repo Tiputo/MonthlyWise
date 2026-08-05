@@ -5,7 +5,6 @@ az dodelany, tak to udelat prehledneji ten kod
 CSS
 - symboly povoleny do inputu
 - search engine, kde muzu vyhledat produkt, rozkliknout si, co chci a pridat to do potreby 
-
 */
 
 const myBudget = document.querySelector(".budgetSubmit");
@@ -79,4 +78,5 @@ function totalBudget(budget) {
   return { deductedTotalBudget, refundTotalBudget };
 }
 
+// ============ API FETCH
 
