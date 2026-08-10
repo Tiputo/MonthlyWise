@@ -36,6 +36,8 @@ firstForm.forEach((form) => {
     checkInput();
     const myBudgetValue = myBudget.value;
     addTextBudget.textContent = "Můj budget: " + myBudgetValue + " kč";
+    sessionStorage.setItem("myBudget", myBudgetValue);
+    sessionStorage.getItem("myBudget");
     card.prepend(addTextBudget);
     getBudget = totalBudget(parseInt(myBudget.value));
   });
@@ -48,8 +50,11 @@ secondForm.forEach((form) => {
     const addItem = document.createElement("p");
     const itemValue = myItem.value;
     let numItemValue = parseInt(myNumItem.value);
+
     addItem.textContent = itemValue + `: ${numItemValue} kč`;
-    sessionStorage.setItem(itemValue, numItemValue)
+
+    sessionStorage.setItem(itemValue, numItemValue);
+    sessionStorage.getItem(itemValue);
 
     // button element
     const getButton = document.getElementById(".buttonItem");
@@ -60,6 +65,7 @@ secondForm.forEach((form) => {
       button.remove();
       addItem.remove();
       getBudget.refundTotalBudget(numItemValue);
+      sessionStorage.removeItem(itemValue);
     });
     remaining.prepend(addItem, button);
     getBudget.deductedTotalBudget(numItemValue);
@@ -78,13 +84,15 @@ function totalBudget(budget) {
   function deductedTotalBudget(item) {
     budget -= item;
     checkBelow();
-    return (remainingText.textContent = `Zbylá částka: ${budget} kč`);
+    remainingText.textContent = `Zbylá částka: ${budget} kč`;
+    sessionStorage.setItem("BudgetLeft", budget);
   }
 
   function refundTotalBudget(item) {
     budget += item;
     checkBelow();
-    return (remainingText.textContent = `Zbylá částka: ${budget} kč`);
+    remainingText.textContent = `Zbylá částka: ${budget} kč`;
+    sessionStorage.setItem("BudgetLeft", budget);
   }
 
   return { deductedTotalBudget, refundTotalBudget };
