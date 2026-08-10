@@ -2,6 +2,7 @@
 PRIORITA
 - Storing data z lokalu = udelat tak, aby ty hodnoty tam porad zustali
 - Pak kdyz se to bude ukladat, tak udelat refresh button na to, aby se to vsechno tam smazalo
+- Udelat, ze nemuzu jit do minusu s hodnotami 
 
 MENSI PRIORITA
 az dodelany, tak to udelat prehledneji ten kod
@@ -56,21 +57,23 @@ secondForm.forEach((form) => {
     sessionStorage.setItem(itemValue, numItemValue);
     sessionStorage.getItem(itemValue);
 
-    // button element
-    const getButton = document.getElementById(".buttonItem");
-    let button = document.createElement("button");
+    removeItem(addItem, getBudget, itemValue, numItemValue);
+    getBudget.deductedTotalBudget(numItemValue);
+  });
+});
 
+function removeItem(addItem, getBudget, itemValue, numItemValue){
+  const getButton = document.getElementById(".buttonItem");
+    let button = document.createElement("button");
     button.innerText = "Smazat";
-    button.addEventListener("click", () => {
+  button.addEventListener("click", () => {
       button.remove();
       addItem.remove();
       getBudget.refundTotalBudget(numItemValue);
       sessionStorage.removeItem(itemValue);
     });
     remaining.prepend(addItem, button);
-    getBudget.deductedTotalBudget(numItemValue);
-  });
-});
+}
 
 function totalBudget(budget) {
   const remainingBelow = document.createElement("p");
@@ -79,6 +82,8 @@ function totalBudget(budget) {
     if (budget < 0) {
       return (remainingBelow.textContent = `Jsi pod nulou!`);
     }
+    else  
+      return (remainingBelow.textContent = "");
   }
 
   function deductedTotalBudget(item) {
