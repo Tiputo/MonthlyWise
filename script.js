@@ -39,12 +39,11 @@ firstForm.forEach((form) => {
     checkInput();
     const myBudgetValue = myBudget.value;
     addTextBudget.textContent = "Můj budget: " + myBudgetValue + " kč";
-    sessionStorage.setItem("myBudget", myBudgetValue);
+    localStorage.setItem("myBudget", myBudgetValue);
     card.prepend(addTextBudget);
     getBudget = totalBudget(parseInt(myBudgetValue));
   });
 });
-loadForm();
 
 const secondForm = document.querySelectorAll(".submit1");
 secondForm.forEach((form) => {
@@ -56,12 +55,25 @@ secondForm.forEach((form) => {
     const itemValue = myItem.value;
 
     addItem.textContent = itemValue + `: ${numItemValue} kč`;
-    sessionStorage.setItem(itemValue, numItemValue);
+    localStorage.setItem(itemValue, numItemValue);
 
     removeItem(addItem, getBudget, itemValue, numItemValue);
     getBudget.deductedTotalBudget(numItemValue);
+
+    //    window.addEventListener("load", () => {
+    //   console.log(storedItem)
+    //   if (storedItem) {
+    //     addItem.textContent = storedItem;
+    //   } else {
+    //     addItem.textContent = "";
+    //   }
+    //   remaining.prepend(addItem);
+    // });
+
+    //  let storedItem = localStorage.getItem(itemValue);
   });
 });
+loadForm();
 
 function removeItem(addItem, getBudget, itemValue, numItemValue) {
   const getButton = document.getElementById(".buttonItem");
@@ -71,7 +83,7 @@ function removeItem(addItem, getBudget, itemValue, numItemValue) {
     button.remove();
     addItem.remove();
     getBudget.refundTotalBudget(numItemValue);
-    sessionStorage.removeItem(itemValue);
+    localStorage.removeItem(itemValue);
   });
   remaining.prepend(addItem, button);
 }
@@ -89,23 +101,23 @@ function totalBudget(budget) {
     budget -= item;
     checkBelow();
     remainingText.textContent = `Zbylá částka: ${budget} kč`;
-    sessionStorage.setItem("BudgetLeft", budget);
+    localStorage.setItem("BudgetLeft", budget);
   }
 
   function refundTotalBudget(item) {
     budget += item;
     checkBelow();
     remainingText.textContent = `Zbylá částka: ${budget} kč`;
-    sessionStorage.setItem("BudgetLeft", budget);
+    localStorage.setItem("BudgetLeft", budget);
   }
 
   return { deductedTotalBudget, refundTotalBudget };
 }
 
-function loadForm() {
-  let storedBudget = sessionStorage.getItem("myBudget");
-  // console.log(storedBudget);
+// ============================
 
+function loadForm() {
+  let storedBudget = localStorage.getItem("myBudget");
   window.addEventListener("load", () => {
     if (storedBudget) {
       addTextBudget.textContent = `Můj budget: ${storedBudget} kč (ulozeny)`;
@@ -115,7 +127,25 @@ function loadForm() {
     card.prepend(addTextBudget);
   });
 
-  //  let storedItem = sessionStorage.getItem(myNumItem);
+  // TO-DO
+  window.addEventListener("load", () => {
+    for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.length === 0) {
+        continue;
+      }
+      console.log(localStorage.getItem(localStorage.key(i)));
 
-  // let storedBudgetLeft = sessionStorage.getItem("BudgetLeft");
+      remaining.append(localStorage.key(i));
+    }
+  });
+
+  let storedBudgetLeft = localStorage.getItem("BudgetLeft");
+  window.addEventListener("load", () => {
+    if (storedBudgetLeft) {
+      remainingText.textContent = `Zbylá částka: ${storedBudgetLeft} kč (ulozeny)`;
+    } else {
+      remainingText.textContent = "";
+    }
+    card.append(remainingText);
+  });
 }
