@@ -93,8 +93,13 @@ function totalBudget(budget) {
   card.append(remainingBelow);
   function checkBelow() {
     if (budget < 0) {
-      return (remainingBelow.textContent = `Jsi pod nulou!`);
-    } else return (remainingBelow.textContent = "");
+     (remainingBelow.textContent = `Jsi pod nulou!`);
+    } 
+    else if (budget < 1000) {
+           (remainingBelow.textContent = `Mas pod 1000!`);
+    }
+    else 
+     return (remainingBelow.textContent = "");
   }
 
   function deductedTotalBudget(item) {
