@@ -134,10 +134,12 @@ function loadForm() {
     for (let i = 0; i < localStorage.length; i++) {
       if (localStorage.getItem("BudgetLeft")) {
       }
+
       console.log(localStorage.getItem(localStorage.key(i)));
 
-      remaining.append(localStorage.key(i) + "\r\n");
-      remaining.append(localStorage.getItem(localStorage.key(i)) + " kč ");
+      remaining.append(localStorage.key(i) + ": ");
+      remaining.append(localStorage.getItem(localStorage.key(i)) + " kč\r\n");
+      remaining.setAttribute('style', 'white-space: pre')
     }
   });
 
