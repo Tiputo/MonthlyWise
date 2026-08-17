@@ -93,13 +93,10 @@ function totalBudget(budget) {
   card.append(remainingBelow);
   function checkBelow() {
     if (budget < 0) {
-     (remainingBelow.textContent = `Jsi pod nulou!`);
-    } 
-    else if (budget < 1000) {
-           (remainingBelow.textContent = `Mas pod 1000!`);
-    }
-    else 
-     return (remainingBelow.textContent = "");
+      remainingBelow.textContent = `Jsi pod nulou!`;
+    } else if (budget < 1000) {
+      remainingBelow.textContent = `Mas pod 1000!`;
+    } else return (remainingBelow.textContent = "");
   }
 
   function deductedTotalBudget(item) {
@@ -135,12 +132,12 @@ function loadForm() {
   // TO-DO
   window.addEventListener("load", () => {
     for (let i = 0; i < localStorage.length; i++) {
-      if (localStorage.length === 0) {
-        continue;
+      if (localStorage.getItem("BudgetLeft")) {
       }
       console.log(localStorage.getItem(localStorage.key(i)));
 
-      remaining.append(localStorage.key(i));
+      remaining.append(localStorage.key(i) + "\r\n");
+      remaining.append(localStorage.getItem(localStorage.key(i)) + " kč ");
     }
   });
 
