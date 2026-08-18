@@ -127,24 +127,19 @@ function loadForm() {
       addTextBudget.textContent = "";
     }
     card.prepend(addTextBudget);
-  });
+    let storedBudgetLeft = localStorage.getItem("BudgetLeft");
 
-  // TO-DO
-  window.addEventListener("load", () => {
+    // TO-DO
     for (let i = 0; i < localStorage.length; i++) {
-      if (localStorage.getItem("BudgetLeft")) {
-      }
 
       console.log(localStorage.getItem(localStorage.key(i)));
 
       remaining.append(localStorage.key(i) + ": ");
       remaining.append(localStorage.getItem(localStorage.key(i)) + " kč\r\n");
-      remaining.setAttribute('style', 'white-space: pre')
+      remaining.setAttribute("style", "white-space: pre");
     }
-  });
+    
 
-  let storedBudgetLeft = localStorage.getItem("BudgetLeft");
-  window.addEventListener("load", () => {
     if (storedBudgetLeft) {
       remainingText.textContent = `Zbylá částka: ${storedBudgetLeft} kč (ulozeny)`;
     } else {
