@@ -76,7 +76,6 @@ secondForm.forEach((form) => {
 loadForm();
 
 function removeItem(addItem, getBudget, itemValue, numItemValue) {
-  const getButton = document.getElementById(".buttonItem");
   let button = document.createElement("button");
   button.innerText = "Smazat";
   button.addEventListener("click", () => {
@@ -131,15 +130,18 @@ function loadForm() {
 
     // TO-DO
     for (let i = 0; i < localStorage.length; i++) {
-
       console.log(localStorage.getItem(localStorage.key(i)));
+      if((localStorage.key(i) == "BudgetLeft") || ((localStorage.key(i) == "myBudget"))){
+        continue;
+      }
 
       remaining.append(localStorage.key(i) + ": ");
       remaining.append(localStorage.getItem(localStorage.key(i)) + " kč\r\n");
       remaining.setAttribute("style", "white-space: pre");
+      
     }
     
-
+    
     if (storedBudgetLeft) {
       remainingText.textContent = `Zbylá částka: ${storedBudgetLeft} kč (ulozeny)`;
     } else {
