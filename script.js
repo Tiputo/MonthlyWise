@@ -1,10 +1,5 @@
 /* TO-DO: 
 PRIORITA
-1) Storing data z lokalu = udelat tak, aby ty hodnoty tam porad zustali
-^^^Funguje pro muj budget zatim (udelal bych pak hodne velkou podminku pro to vevnitr formu)
-
-2) Pak kdyz se to bude ukladat, tak udelat refresh button na to, aby se to vsechno tam smazalo
-3) Udelat, ze nemuzu jit do minusu s hodnotami myho budgetu 
 
 MENSI PRIORITA
 az dodelany, tak to udelat prehledneji ten kod
@@ -33,6 +28,7 @@ function checkInput() {
 const firstForm = document.querySelectorAll(".submit");
 const addTextBudget = document.createElement("p");
 let getBudget;
+let getForm = loadForm();
 firstForm.forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -50,16 +46,16 @@ secondForm.forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const addItem = document.createElement("p");
+      const addItem = document.createElement("p");
     let numItemValue = parseInt(myNumItem.value);
     const itemValue = myItem.value;
 
     addItem.textContent = itemValue + `: ${numItemValue} kč`;
     localStorage.setItem(itemValue, numItemValue);
 
-    removeItem(addItem, getBudget, itemValue, numItemValue);
-    getBudget.deductedTotalBudget(numItemValue);
 
+    getBudget.deductedTotalBudget(numItemValue);
+    getForm.removeItem(addItem, getBudget, itemValue, numItemValue);
     //    window.addEventListener("load", () => {
     //   console.log(storedItem)
     //   if (storedItem) {
@@ -73,19 +69,9 @@ secondForm.forEach((form) => {
     //  let storedItem = localStorage.getItem(itemValue);
   });
 });
-loadForm();
 
-function removeItem(addItem, getBudget, itemValue, numItemValue) {
-  let button = document.createElement("button");
-  button.innerText = "Smazat";
-  button.addEventListener("click", () => {
-    button.remove();
-    addItem.remove();
-    getBudget.refundTotalBudget(numItemValue);
-    localStorage.removeItem(itemValue);
-  });
-  remaining.prepend(addItem, button);
-}
+
+// ============================
 
 function totalBudget(budget) {
   const remainingBelow = document.createElement("p");
@@ -139,8 +125,11 @@ function loadForm() {
       }
 
       remaining.append(localStorage.key(i) + ": ");
-      remaining.append(localStorage.getItem(localStorage.key(i)) + " kč\r\n");
+      remaining.append(localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)\r\n");
       remaining.setAttribute("style", "white-space: pre");
+
+      let removeLoadItem = document.createElement("button");
+        removeLoadItem.innerText = "Smazat";
     }
 
     if (storedBudgetLeft) {
@@ -149,5 +138,21 @@ function loadForm() {
       remainingText.textContent = "";
     }
     card.append(remainingText);
+
   });
+
+  function removeItem(addItem, getBudget, itemValue, numItemValue) {
+  let button = document.createElement("button");
+  button.innerText = "Smazat";
+  button.addEventListener("click", () => {
+    button.remove();
+    addItem.remove();
+    getBudget.refundTotalBudget(numItemValue);
+    localStorage.removeItem(itemValue);
+  });
+  remaining.prepend(addItem, button);
+}
+
+return ({ removeItem });
+
 }
