@@ -1,12 +1,3 @@
-/* TO-DO: 
-PRIORITA
-
-MENSI PRIORITA
-az dodelany, tak to udelat prehledneji ten kod
-neni mozny kvuli backendu.
-search engine, kde muzu vyhledat produkt, rozkliknout si, co chci a pridat to do potreby 
-*/
-
 const myBudget = document.querySelector(".budgetSubmit");
 const myNumItem = document.querySelector(".needNumSubmit");
 const myItem = document.querySelector(".needSubmit");
@@ -52,10 +43,13 @@ secondForm.forEach((form) => {
 
     addItem.textContent = itemValue + `: ${numItemValue} kč`;
     localStorage.setItem(itemValue, numItemValue);
-
-
     getBudget.deductedTotalBudget(numItemValue);
     getForm.removeItem(addItem, getBudget, itemValue, numItemValue);
+
+
+
+     
+
     //    window.addEventListener("load", () => {
     //   console.log(storedItem)
     //   if (storedItem) {
@@ -128,8 +122,15 @@ function loadForm() {
       remaining.append(localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)\r\n");
       remaining.setAttribute("style", "white-space: pre");
 
-      let removeLoadItem = document.createElement("button");
-        removeLoadItem.innerText = "Smazat";
+           let removeLoadItem = document.createElement("button");
+      removeLoadItem.innerText = "Smazat";
+          card.append(removeLoadItem); 
+        removeLoadItem.addEventListener("click", () => {
+          removeLoadItem.remove();
+          remaining.remove();
+          localStorage.removeItem();
+        })
+
     }
 
     if (storedBudgetLeft) {
@@ -138,10 +139,10 @@ function loadForm() {
       remainingText.textContent = "";
     }
     card.append(remainingText);
-
   });
 
   function removeItem(addItem, getBudget, itemValue, numItemValue) {
+
   let button = document.createElement("button");
   button.innerText = "Smazat";
   button.addEventListener("click", () => {
@@ -149,10 +150,10 @@ function loadForm() {
     addItem.remove();
     getBudget.refundTotalBudget(numItemValue);
     localStorage.removeItem(itemValue);
+
   });
   remaining.prepend(addItem, button);
 }
 
 return ({ removeItem });
-
 }
