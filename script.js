@@ -18,6 +18,7 @@ function checkInput() {
 
 const firstForm = document.querySelectorAll(".submit");
 const addTextBudget = document.createElement("p");
+const reset = document.querySelector(".reset");
 let getBudget;
 let getForm = loadForm();
 firstForm.forEach((form) => {
@@ -37,7 +38,7 @@ secondForm.forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
 
-      const addItem = document.createElement("p");
+    const addItem = document.createElement("p");
     let numItemValue = parseInt(myNumItem.value);
     const itemValue = myItem.value;
 
@@ -45,25 +46,8 @@ secondForm.forEach((form) => {
     localStorage.setItem(itemValue, numItemValue);
     getBudget.deductedTotalBudget(numItemValue);
     getForm.removeItem(addItem, getBudget, itemValue, numItemValue);
-
-
-
-     
-
-    //    window.addEventListener("load", () => {
-    //   console.log(storedItem)
-    //   if (storedItem) {
-    //     addItem.textContent = storedItem;
-    //   } else {
-    //     addItem.textContent = "";
-    //   }
-    //   remaining.prepend(addItem);
-    // });
-
-    //  let storedItem = localStorage.getItem(itemValue);
   });
 });
-
 
 // ============================
 
@@ -119,18 +103,19 @@ function loadForm() {
       }
 
       remaining.append(localStorage.key(i) + ": ");
-      remaining.append(localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)\r\n");
+      remaining.append(
+        localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)\r\n",
+      );
       remaining.setAttribute("style", "white-space: pre");
 
-           let removeLoadItem = document.createElement("button");
+      let removeLoadItem = document.createElement("button");
       removeLoadItem.innerText = "Smazat";
-          card.append(removeLoadItem); 
-        removeLoadItem.addEventListener("click", () => {
-          removeLoadItem.remove();
-          remaining.remove();
-          localStorage.removeItem();
-        })
-
+      card.append(removeLoadItem);
+      removeLoadItem.addEventListener("click", () => {
+        removeLoadItem.remove();
+        remaining.remove();
+        localStorage.removeItem(localStorage.key(i));
+      });
     }
 
     if (storedBudgetLeft) {
@@ -142,18 +127,20 @@ function loadForm() {
   });
 
   function removeItem(addItem, getBudget, itemValue, numItemValue) {
-
-  let button = document.createElement("button");
-  button.innerText = "Smazat";
-  button.addEventListener("click", () => {
-    button.remove();
-    addItem.remove();
-    getBudget.refundTotalBudget(numItemValue);
-    localStorage.removeItem(itemValue);
-
+    let button = document.createElement("button");
+    button.innerText = "Smazat";
+    button.addEventListener("click", () => {
+      button.remove();
+      addItem.remove();
+      getBudget.refundTotalBudget(numItemValue);
+      localStorage.removeItem(itemValue);
+    });
+    remaining.setAttribute("style", "white-space: pre");
+    remaining.prepend(addItem);
+    remaining.append(button);
+  }
+  reset.addEventListener("submit", (event) => {
+    localStorage.clear();
   });
-  remaining.prepend(addItem, button);
-}
-
-return ({ removeItem });
+  return { removeItem };
 }
