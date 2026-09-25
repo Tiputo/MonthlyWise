@@ -102,19 +102,18 @@ function loadForm() {
         continue;
       }
 
-      remaining.append(localStorage.key(i) + ": ");
-      remaining.append(
-        localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)\r\n",
-      );
-      remaining.setAttribute("style", "white-space: pre");
-
+        let savedInput = document.createElement("p");
+        savedInput.textContent = localStorage.key(i) + ": " +         localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)"
+      card.append(savedInput);
+      
       let removeLoadItem = document.createElement("button");
       removeLoadItem.innerText = "Smazat";
       card.append(removeLoadItem);
       removeLoadItem.addEventListener("click", () => {
         removeLoadItem.remove();
-        remaining.remove();
+        savedInput.remove();
         localStorage.removeItem(localStorage.key(i));
+        // potrebuju refund tech penez z getBudget refundtotalbudget
       });
     }
 
