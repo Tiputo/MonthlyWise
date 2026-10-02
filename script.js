@@ -103,7 +103,10 @@ function loadForm() {
       }
 
         let savedInput = document.createElement("p");
-        savedInput.textContent = localStorage.key(i) + ": " +         localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)"
+        savedInput.textContent = localStorage.key(i) + ": " + localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)"
+
+
+
       card.append(savedInput);
       
       let removeLoadItem = document.createElement("button");
@@ -116,6 +119,7 @@ function loadForm() {
         // potrebuju refund tech penez z getBudget refundtotalbudget
       });
     }
+
 
     if (storedBudgetLeft) {
       remainingText.textContent = `Zbylá částka: ${storedBudgetLeft} kč (ulozeny)`;
@@ -134,9 +138,7 @@ function loadForm() {
       getBudget.refundTotalBudget(numItemValue);
       localStorage.removeItem(itemValue);
     });
-    remaining.setAttribute("style", "white-space: pre");
-    remaining.prepend(addItem);
-    remaining.append(button);
+    remaining.prepend(addItem, button);
   }
   reset.addEventListener("submit", (event) => {
     localStorage.clear();
