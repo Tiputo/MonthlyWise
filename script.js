@@ -49,8 +49,6 @@ secondForm.forEach((form) => {
   });
 });
 
-// ============================
-
 function totalBudget(budget) {
   const remainingBelow = document.createElement("p");
   card.append(remainingBelow);
@@ -79,10 +77,11 @@ function totalBudget(budget) {
   return { deductedTotalBudget, refundTotalBudget };
 }
 
-// ============================
-
 function loadForm() {
   let storedBudget = localStorage.getItem("myBudget");
+  const myStoredNumItem = document.querySelector(".needNumSubmit");
+  
+
   window.addEventListener("load", () => {
     if (storedBudget) {
       addTextBudget.textContent = `Můj budget: ${storedBudget} kč (ulozeny)`;
@@ -94,7 +93,7 @@ function loadForm() {
 
     // TO-DO
     for (let i = 0; i < localStorage.length; i++) {
-      console.log(localStorage.getItem(localStorage.key(i)));
+      console.log(parseInt(localStorage.getItem(localStorage.key(i))));
       if (
         localStorage.key(i) == "BudgetLeft" ||
         localStorage.key(i) == "myBudget"
@@ -102,10 +101,13 @@ function loadForm() {
         continue;
       }
 
-        let savedInput = document.createElement("p");
-        savedInput.textContent = localStorage.key(i) + ": " + localStorage.getItem(localStorage.key(i)) + " kč (ulozeny)"
+      const savedRemaining = document.querySelector(".remaining");
+       let savedInput = document.createElement("p");
+        let savedItemValue = localStorage.getItem(localStorage.key(i));
+       savedInput.textContent = localStorage.key(i) + ": " + savedItemValue + " kč (ulozeny)"
 
-
+      //  savedInput.textContent = `${storedNumItem} kc`
+     // console.log(storedNumItem);
 
       card.append(savedInput);
       
@@ -116,6 +118,10 @@ function loadForm() {
         removeLoadItem.remove();
         savedInput.remove();
         localStorage.removeItem(localStorage.key(i));
+        
+        
+
+
         // potrebuju refund tech penez z getBudget refundtotalbudget
       });
     }
